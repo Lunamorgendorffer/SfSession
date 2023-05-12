@@ -3,6 +3,13 @@
 {% block title %}Hello SessionController!{% endblock %}
 
 {% block body %}
-<h1>Liste des sessions </h1>
+<h1>Listes des sessions</h1>
+
+{% for session in sessions %}
+
+    <a href="{{ path('show_session', {'id': session.id})}}">{{session}}</a><br>
+
+{% endfor %}
+
 
 {% endblock %}
