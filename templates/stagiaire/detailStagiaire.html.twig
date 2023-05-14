@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DetailSession{% endblock %}
+
+{% block body %}
+
+<h1> {{ stagiaire }}</h1>
+<p>
+    Date de Naissances: {{stagiaire.dateNaissance | date ('d/m/Y') }}, {{stagiaire.age}} ans. <br>
+    Adresse: {{stagiaire.adresse}} <br>
+    Cp: {{stagiaire.cp}} <br>
+    Ville: {{stagiaire.ville}} <br>
+</p>
+
+
+
+{% endblock %}
