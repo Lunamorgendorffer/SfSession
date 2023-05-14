@@ -3,23 +3,69 @@
 namespace App\Controller;
 
 use App\Entity\Session;
+use App\Form\SessionType;
+use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SessionController extends AbstractController
 {
+
+
     #[Route('/session', name: 'app_session')]
-     public function index(EntityManagerInterface  $entityManager): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
-        $sessions =  $entityManager->getRepository(Session::class)->findAll();
+        $sessions = $entityManager->getRepository(Session::class)->findAll();
         return $this->render('session/index.html.twig', [
             'sessions' => $sessions,
         ]);
     }
 
+    #[Route('/session/add', name: 'add_session')]
+    #[Route('/session/{id}/edit', name: 'edit_session')]
+    public function add(EntityManagerInterface $entityManager, Session $session = null, Request $request): Response 
+    {
+        if (!$session){ // si la session n'existe pas 
+            $session = new Session();  // alors crée un nouvel objet session 
+        }
+        // on crée le formulaire 
+        $form = $this->createForm(SessionType::class, $session);
+        $form->handleRequest($request);
 
+        //quand on sousmet le formulaire 
+        if($form->isSubmitted() && $form->isValid()){
+
+            $session = $form->getData();
+            $entityManager->persist($session);// = prepare
+            $entityManager->flush();// execute, on envoie les données dans la db 
+
+            return $this->redirectToRoute('app_session');
+
+        }
+
+        // vue pour afficher le formulaire 
+        return $this->render('session/addSession.html.twig', [
+           'formAddsession' => $form->createView(),
+           'edit'=> $session->getId()
+            
+        ]);
+
+    }
+
+    #[Route('/session/{id}/delete', name: 'delete_session')]
+    public function delete(EntityManagerInterface $entityManager, Session $session): Response
+    {
+        $entityManager->remove($session);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_session');
+
+    }
+
+    
     #[Route('/session/{id}', name: 'show_session')]
     public function show(Session $session): Response
     {
@@ -27,4 +73,8 @@ class SessionController extends AbstractController
            'session' => $session,
         ]);
     }
+    
+    
+
+      
 }
