@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormationController!{% endblock %}
+
+{% block body %}
+
+<h1>Liste des formations </h1>
+
+<a class="btn btn-primary" href="{{ path('add_formation')}}">Add formation </a><br>
+
+{% for formation in formations %}
+    <a href="{{ path('show_formation', {'id': formation.id})}}">{{formation}}</a>
+    <a class="btn btn-warning" href="{{ path('edit_formation', {'id':formation.id}) }}">Edit</a> 
+    <a class="btn btn-danger" href="{{ path('delete_formation', {'id':formation.id}) }}">Delete</a><br>
+{% endfor %}
+{% endblock %}

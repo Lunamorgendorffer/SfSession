@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AddModule{% endblock %}
+
+{% block body %}
+
+{% if edit %}
+    <h1>Edit un module</h1>
+{% else %}
+    <h1> ajouter un module</h1>
+{% endif %}
+
+
+{{ form_start(formAddmodule) }}
+    
+    {{ form_row(formAddmodule.intitule) }}
+    {{ form_row(formAddmodule.categorie) }}
+    {{ form_row(formAddmodule.submit) }}
+
+{{ form_end(formAddmodule) }}
+
+{% endblock %}
