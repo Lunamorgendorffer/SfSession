@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DetailSession{% endblock %}
+
+{% block body %}
+
+<h1> {{ categorie }}</h1>
+<p>
+    intitule: {{categorie.intitule}} <br>
+
+</p>
+
+<h2>liste des Modules</h2>
+{% if categorie.moduleSessions| length ==0 %}
+    
+    <p> Il n'y a pas encore de module</p>
+
+{% else %}
+
+    {% for module in categorie.moduleSessions %}
+        {{module}} <br>
+    {% endfor %}
+
+{% endif %}
+
+<a class="btn btn-primary" href="{{ path('add_module')}}">Ajouter un module</a><br>
+
+
+{% endblock %}
