@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Session;
+use App\Entity\Formation;
 use App\Form\SessionType;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,8 +20,10 @@ class SessionController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $sessions = $entityManager->getRepository(Session::class)->findAll();
+        $formation = $entityManager->getRepository(Formation::class)->findAll();
         return $this->render('session/index.html.twig', [
             'sessions' => $sessions,
+            'formations' => $formations
         ]);
     }
 
@@ -67,13 +70,22 @@ class SessionController extends AbstractController
 
     
     #[Route('/session/{id}', name: 'show_session')]
+    // #[Route('/formation/{id}', name: 'show_formation')]
     public function show(Session $session): Response
     {
         return $this->render('session/detailSession.html.twig', [
            'session' => $session,
+           'formation' => $formation,
         ]);
     }
     
+    #[Route('/formation/{id}', name: 'show_formation')]
+    public function showFormation(Formation $formation): Response
+    {
+        return $this->render('formation/detailFormation.html.twig', [
+           'formation' => $formation,
+        ]);
+    }
     
 
       

@@ -6,8 +6,10 @@
     
     <h1>Mes catégories</h1>
         
-    {% for category in categories %}
-        {{ category}} <br>
+    {% for categorie in categories %}
+        {{ categorie}}
+        <a class="btn btn-warning" href="{{ path('edit_categorie', {'id':categorie.id}) }}">Edit</a> 
+        <a class="btn btn-danger" href="{{ path('delete_categorie', {'id':categorie.id}) }}">Delete</a><br>
     {% endfor %}
     
 {% endblock %}
