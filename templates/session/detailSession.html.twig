@@ -8,12 +8,36 @@
 <p>
     date de debut : {{session.dateDebut| date ('d/m/Y')}} <br>
     date de fin: {{session.dateFin| date ('d/m/Y')}} <br>
-    nombre de place: {{session.nbPlaces}}
+    nombre de place: {{session.nbPlaces}} <br>
+    formation : <a href="{{ path('show_formation', {'id': formation.id})}}">{{formation.intitule}} </a>
+
 </p>
 
-<h2>liste des stagaires</h2>
-{% for stagiaire in session.stagiaires %}
-    {{stagiaire}} <br>
-{% endfor %}
+<h2>liste des stagiaires</h2>
+{% if session.stagiaires| length ==0 %}
+    
+    <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
+
+{% else %}
+
+    {% for stagiaire in session.stagiaires %}
+        {{stagiaire}} <br>
+    {% endfor %}
+
+{% endif %}
+
+<h2>liste des p</h2>
+{% if session.stagiaires| length ==0 %}
+    
+    <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
+
+{% else %}
+
+    {% for stagiaire in session.stagiaires %}
+        {{stagiaire}} <br>
+    {% endfor %}
+
+{% endif %}
+
 
 {% endblock %}

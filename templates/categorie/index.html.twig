@@ -5,11 +5,17 @@
 {% block body %}
     
     <h1>Mes catégories</h1>
+    <div class="container" style="display: flex;flex-wrap: wrap;">
+            {% for categorie in categories %}
+            <div class="card rounded" style="width: 30%; margin: 25px; ">
+                <a style="text-align:center" href="{{ path('show_categorie', {'id': categorie.id})}}">{{categorie}}</a>
+                <div class="button" style="display: flex;justify-content: center; gap:10px ">
+                    <a class="btn btn-warning" href="{{ path('edit_categorie', {'id':categorie.id}) }}">Edit</a> 
+                    <a class="btn btn-danger" href="{{ path('delete_categorie', {'id':categorie.id}) }}">Delete</a><br>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
         
-    {% for categorie in categories %}
-        {{ categorie}}
-        <a class="btn btn-warning" href="{{ path('edit_categorie', {'id':categorie.id}) }}">Edit</a> 
-        <a class="btn btn-danger" href="{{ path('delete_categorie', {'id':categorie.id}) }}">Delete</a><br>
-    {% endfor %}
-    
 {% endblock %}
