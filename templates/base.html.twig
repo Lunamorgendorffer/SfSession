@@ -17,12 +17,18 @@
     <body>
     </head>
     <body>
-        <nav>
-            <ul>
-                <li><a href="{{ path('app_session')}}">Liste des sessions</a></li>
-                <li><a href="{{ path('app_stagiaire')}}">Liste des stagiaires</a></li>
-            </ul>
-        </nav>
+        <header class="header">
+            <div class="container">
+                <nav>
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-around mb-md-0">
+                        <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_categorie')}}">Categories</a></li>
+                        <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_session')}}">Sessions</a></li>
+                        <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_stagiaire')}}">Stagiaires</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </header>
         {% block body %}{% endblock %}
     </body>
 </html>
