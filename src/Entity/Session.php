@@ -36,10 +36,14 @@ class Session
     #[ORM\ManyToMany(targetEntity: Stagiaire::class, inversedBy: 'sessions')]
     private Collection $stagiaires;
 
+    #[ORM\ManyToMany(targetEntity: Formation::class, mappedBy: 'sessions')]
+    private Collection $formations;
+
     public function __construct()
     {
         $this->stagiaires = new ArrayCollection();
         $this->programmes = new ArrayCollection();
+        $this->formations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +150,33 @@ class Session
     public function removeStagiaire(Stagiaire $stagiaire): self
     {
         $this->stagiaires->removeElement($stagiaire);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Formation>
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    public function addFormation(Formation $formation): self
+    {
+        if (!$this->formations->contains($formation)) {
+            $this->formations->add($formation);
+            $formation->addSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        if ($this->formations->removeElement($formation)) {
+            $formation->removeSession($this);
+        }
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Form\CategorieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,6 +59,15 @@ class CategorieController extends AbstractController
 
         return $this->redirectToRoute('app_categorie');
 
+    }
+
+    #[Route('/categorie/{id}', name: 'show_categorie')]
+    public function show(Categorie $categorie): Response
+    {
+        return $this->render('categorie/detailCategorie.html.twig', [
+           'categorie' => $categorie,
+           'module' => $categorie->getModuleSessions()
+        ]);
     }
 
 
