@@ -4,26 +4,36 @@
 
 {% block body %}
 
-<h1> {{ categorie }}</h1>
-<p>
-    intitule: {{categorie.intitule}} <br>
-
-</p>
-
-<h2>liste des Modules</h2>
-{% if categorie.moduleSessions| length ==0 %}
-    
-    <p> Il n'y a pas encore de module</p>
-
-{% else %}
-
-    {% for module in categorie.moduleSessions %}
-        {{module}} <br>
-    {% endfor %}
-
+<h1 style="text-align: center; margin-bottom: 30px"> {{ categorie }}</h1>
+<div class="container" style="display: flex; justify-content: center;">
+    <div>
+        {% if categorie.moduleSessions| length ==0 %}
+            <h2>Liste des Modules</h2>
+            <p> Il n'y a pas encore de module</p>
+        {% else %}
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                    <th>Modules</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for module in categorie.moduleSessions %}
+                    <tr>
+                        <td>{{module.intitule}}</td>
+                        <td><a  class="btn btn-secondary" href="{{ path('edit_module', {'id': module.id})}}">Edit</a></td>
+                        <td><a class="btn btn-danger" href="{{ path('delete_module', {'id': module.id})}}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table><br>
 {% endif %}
-
-<a class="btn btn-primary" href="{{ path('add_module')}}">Ajouter un module</a><br>
-
+    <div style="display: flex; justify-content: center;">
+        <a class="btn btn-primary" href="{{ path('add_module')}}">Add module</a><br>
+    </div>
+</div>
 
 {% endblock %}
+

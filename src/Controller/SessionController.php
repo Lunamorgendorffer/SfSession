@@ -70,24 +70,25 @@ class SessionController extends AbstractController
 
     
     #[Route('/session/{id}', name: 'show_session')]
+
     // #[Route('/formation/{id}', name: 'show_formation')]
-    public function show(Session $session, Formation $formation): Response
+    public function show(Session $session): Response
     {
         return $this->render('session/detailSession.html.twig', [
            'session' => $session,
-           'formation' => $formation,
-           'programme' => $session->getProgramme(),
+           'formation' => $session->getFormations(),
+           'programme' => $session->getProgrammes(),
         ]);
     }
     
-    #[Route('/formation/{id}', name: 'show_formation')]
-    public function showFormation(Formation $formation): Response
-    {
-        return $this->render('formation/detailFormation.html.twig', [
-           'formation' => $formation,
-           'sessions' => $formation->getSessions(),
-        ]);
-    }
+    // #[Route('/formation/{id}', name: 'show_formation')]
+    // public function showFormation(Formation $formation): Response
+    // {
+    //     return $this->render('formation/detailFormation.html.twig', [
+    //        'formation' => $formation,
+    //        'sessions' => $formation->getSessions(),
+    //     ]);
+    // }
     
 
       

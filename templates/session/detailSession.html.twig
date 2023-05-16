@@ -4,40 +4,62 @@
 
 {% block body %}
 
-<h1> {{ session }}</h1>
-<p>
-    date de debut : {{session.dateDebut| date ('d/m/Y')}} <br>
-    date de fin: {{session.dateFin| date ('d/m/Y')}} <br>
-    nombre de place: {{session.nbPlaces}} <br>
-    formation : <a href="{{ path('show_formation', {'id': formation.id})}}">{{formation.intitule}} </a>
+<h1 style="text-align: center; margin-bottom: 30px"> {{ session }}</h1>
+<div class="container" style="display: flex; flex-direction: column; justify-content: center;">
+    <div>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Nombre de place</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{session.dateDebut| date ('d/m/Y')}}</td>
+                    <td>{{session.dateFin| date ('d/m/Y')}}</td>
+                    <td>{{session.nbPlaces}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-</p>
+    <div>
+        {% for programme in session.programmes %}
+        <table class="table2">
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Nombre de jour</th>
+                    <th>Lien</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ programme.modules }}</td>
+                    <td>{{ programme.duree }}</td>
+                    <td><a href="#">Détail</a></td>
+                </tr>
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
 
-<h2>liste des stagiaires</h2>
-{% if session.stagiaires| length ==0 %}
-    
-    <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
+    <h2>liste des stagiaires</h2>
+        {% if session.stagiaires| length ==0 %}
+            
+            <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
 
-{% else %}
+        {% else %}
 
-    {% for stagiaire in session.stagiaires %}
-        {{stagiaire}} <br>
-    {% endfor %}
+            {% for stagiaire in session.stagiaires %}
+                {{stagiaire}} <br>
+            {% endfor %}
 
-{% endif %}
+        {% endif %}
 
-<h2>liste des p</h2>
-{% if session.stagiaires| length ==0 %}
-    
-    <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
-
-{% else %}
-
-    {% for stagiaire in session.stagiaires %}
-        {{stagiaire}} <br>
-    {% endfor %}
-
-{% endif %}
+</div>
 
 
 {% endblock %}
