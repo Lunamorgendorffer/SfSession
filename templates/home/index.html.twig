@@ -3,6 +3,35 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<h1>Bienvenue {{app.user.pseudo}} </h1>
+
+<h1>Bienvenue {{app.user.pseudo}}</h1>
+
+<table>
+    <thead>
+        <thead>
+            <tr>
+            <th>Intitulé Session</th>
+            <th>Date de debut</th>
+            <th>Date de fin</th>
+            <th>Nombre de places</th>
+            <th>Nombre de places reservées</th>
+            <th>Nombre de places disponible</th>
+            <th>Détail Programme</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for session in sessions %}
+        <tr>
+            <td>{{session}}</td>
+            <td>{{session.dateDebut| date ('d/m/Y')}}</td>
+            <td>{{session.dateFin| date ('d/m/Y')}}</td>
+            <td>{{session.nbPlaces}}</td>
+            <td>{{session.reservations}}</td>
+            <td>{{session.disponibles}}</td>
+            <td><a href="#">Lien</a></td>
+        </tr> 
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

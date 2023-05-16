@@ -87,7 +87,7 @@ class Session
         return $this;
     }
 
-    public function getNbPlaces(): ?int
+    public function getNbPlaces()
     {
         return $this->nbPlaces;
     }
@@ -180,6 +180,29 @@ class Session
 
         return $this;
     }
+
+    public function getReservations()
+    {
+        $nbReservees = count($this->stagiaires);
+        $nbDispos = 0;
+        
+        if (count($this->stagiaires) != 0){
+            echo $nbReservees;
+            
+        }else{
+            echo " Aucune réservation ";
+        }
+    }
+
+
+    public function getDisponibles(){
+        $nbPlaces = $this->nbPlaces ; //compte le nb de places
+        $nbReservees = count($this->stagiaires); // je compte le nombre de stagiaires
+        $nbDisponible = $nbPlaces - $nbReservees ; // je fais la soustraction entre les 2 counts 
+        return $nbDisponible; // je retourn $nbDisponible
+    }
+
+
 
     public function __toString()
     {
