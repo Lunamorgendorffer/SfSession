@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Session;
 use App\Form\ModuleType;
 use App\Entity\ModuleSession;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,10 +17,10 @@ class ModuleController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $modules = $entityManager->getRepository(ModuleSession::class)->findBy([], ["intitule" => "ASC"]);
-        $programmes = $entityManager->getRepository(Programme::class)->findAll();
         return $this->render('module/index.html.twig', [
             'modules' => $modules,
-            $programmes => $programmes,
+            
+           
         ]);
     }
 
