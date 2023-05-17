@@ -54,7 +54,7 @@
         {% else %}
 
             {% for stagiaire in session.stagiaires %}
-                {{stagiaire}} <br>
+                <a href="{{ path('show_stagiaire', {'id': stagiaire.id})}}">{{stagiaire}}</a> <br>
             {% endfor %}
 
         {% endif %}
