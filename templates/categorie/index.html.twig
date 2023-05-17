@@ -9,10 +9,12 @@
             {% for categorie in categories %}
             <div class="card rounded" style="width: 30%; margin: 25px; ">
                 <a style="text-align:center" href="{{ path('show_categorie', {'id': categorie.id})}}">{{categorie}}</a>
+                {% if is_granted('ROLE_ADMIN') %}
                 <div class="button" style="display: flex;justify-content: center; gap:10px ">
                     <a class="btn btn-warning" href="{{ path('edit_categorie', {'id':categorie.id}) }}">Edit</a> 
                     <a class="btn btn-danger" href="{{ path('delete_categorie', {'id':categorie.id}) }}">Delete</a><br>
                 </div>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

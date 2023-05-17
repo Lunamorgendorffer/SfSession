@@ -15,25 +15,31 @@
                 <thead>
                     <tr>
                     <th>Modules</th>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <th>Edit</th>
                     <th>Delete</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
                     {% for module in categorie.moduleSessions %}
                     <tr>
                         <td>{{module.intitule}}</td>
-                        <td><a  class="btn btn-secondary" href="{{ path('edit_module', {'id': module.id})}}">Edit</a></td>
-                        <td><a class="btn btn-danger" href="{{ path('delete_module', {'id': module.id})}}">Delete</a></td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td><a  class="btn btn-secondary" href="{{ path('edit_module', {'id': module.id})}}">Edit</a></td>
+                            <td><a class="btn btn-danger" href="{{ path('delete_module', {'id': module.id})}}">Delete</a></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
             </table><br>
 {% endif %}
+{% if is_granted('ROLE_ADMIN') %}
     <div style="display: flex; justify-content: center;">
         <a class="btn btn-primary" href="{{ path('add_module', {'categorieID': categorie.id})}}">Add module</a><br>
     </div>
 </div>
+{% endif %}
 
 {% endblock %}
 

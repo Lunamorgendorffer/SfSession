@@ -4,14 +4,26 @@
 
 {% block body %}
 
-<h1>Liste des sessions </h1>
+<h1 style="text-align:center;">Liste des sessions </h1>
 
-<a class="btn btn-primary" href="{{ path('add_session')}}">Add session </a><br>
 
-{% for session in sessions %}
-    <a href="{{ path('show_session', {'id': session.id})}}">{{session}}</a>
-    <a class="btn btn-warning" href="{{ path('edit_session', {'id':session.id}) }}">Edit</a> 
-    <a class="btn btn-danger" href="{{ path('delete_session', {'id':session.id}) }}">Delete</a><br>
-{% endfor %}
 
+<div class="container" style="display: flex;flex-wrap: wrap; justify-content:center; flex-direction: column; align-items: center">
+    
+    {% for session in sessions %}
+        <div class="card rounded" style=" width: 30%; margin: 25px; ">
+            <a style="text-align:center;" href="{{ path('show_session', {'id': session.id})}}">{{session}}</a> <br>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div id="button" style="text-align:center;">
+                <a class="btn btn-warning" href="{{ path('edit_session', {'id':session.id}) }}">Edit</a> 
+                <a class="btn btn-danger" href="{{ path('delete_session', {'id':session.id}) }}">Delete</a><br>
+            </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <div class="adtbtn">
+        <a class="btn btn-primary" href="{{ path('add_session')}}">Add session </a><br>
+    </div>
+    
+</div>
 {% endblock %}
