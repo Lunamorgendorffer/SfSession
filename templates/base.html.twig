@@ -19,21 +19,23 @@
     <body>
         <header class="header">
             <div class="container">
-                <nav>
+                <nav >
                     {% if is_granted('ROLE_ADMIN') %}
-                    <div>
-                        <a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_stagiaire')}}">Stagiaires</a>
-                    </div>
-                    {% endif %}
-                    
-                    {% if app.user %}
+                    <div id="nav-left">
                         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-around mb-md-0">
-                            <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_home')}}">Home</a></li>
                             <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_categorie')}}">Categories</a></li>
                             <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_session')}}">Sessions</a></li>
+                            <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_stagiaire')}}">Stagiaires</a></li>
                             <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_logout')}}">Se deconnecter</a></li>  
-                                
                         </ul>
+                    </div>
+                    {% endif %}
+                    {% if app.user %}
+                    <div id="nav-right">
+                        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-around mb-md-0">
+                            <li><a class="nav-link px-2 fs-3 fw-medium text-white" href="{{ path('app_home')}}">Home</a></li>
+                        </ul>
+                    </div>
                     {% else %}
                     <ul style="display: flex; justify-content: center; gap:30px">
                         <li style="list-style-type: none;" ><a class="nav-link px-2 fs-3 fw-medium text-white"href="{{ path('app_login')}}">Se connecter</a></li>
