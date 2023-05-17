@@ -84,4 +84,43 @@ header{
     border-bottom: 2px solid #DE4313;
 }
 
+/**table3 **/
+
+.table3 {
+    border-collapse: collapse;
+    text-align:center; 
+    margin-left:auto; 
+    margin-right:auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-top: 21px;
+}
+
+
+.table3 thead tr {
+    background-color: #0093E9;
+    color: #ffffff;
+    
+}
+
+.table3 th,
+.table3 td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.table3 tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table3 tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.table3 tbody tr:last-of-type {
+    border-bottom: 2px solid #0093E9;
+}
+
 
