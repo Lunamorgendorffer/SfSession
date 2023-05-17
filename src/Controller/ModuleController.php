@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Form\ModuleType;
+use App\Entity\Categorie;
 use App\Entity\ModuleSession;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,36 +25,39 @@ class ModuleController extends AbstractController
         ]);
     }
 
-    #[Route('/module/add', name: 'add_module')]
-    #[Route('/module/{id}/edit', name: 'edit_module')]
-    public function add(EntityManagerInterface $entityManager, ModuleSession $module = null, Request $request): Response 
+    #[Route('/module/add/{categorieID}', name: 'add_module')]
+    #[Route('/module/{id}/edit/{categorieID}', name: 'edit_module')]
+    public function add(EntityManagerInterface $em, ModuleSession $module = null, Request $request, $categorieID = null): Response
     {
-        if (!$module){ // si la module n'existe pas 
-            $module = new ModuleSession();  // alors crée un nouvel objet module 
+        if(!$module){
+
+            $module = new ModuleSession();
         }
-        // on crée le formulaire 
+
+        $categorie= $em->getRepository(Categorie::class)->find($categorieID);
+
         $form = $this->createForm(ModuleType::class, $module);
         $form->handleRequest($request);
 
-        //quand on sousmet le formulaire 
-        if($form->isSubmitted() && $form->isValid()){
+        // si (on a bien appuyer sur submit && que les infos du formulaire sont conformes au filter input qu'on aura mis)
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $module = $form->getData();
-            $entityManager->persist($module);// = prepare
-            $entityManager->flush();// execute, on envoie les données dans la db 
+            $module->setCategorie($categorie);
 
-            return $this->redirectToRoute('app_module');
+            $module = $form->getData(); // hydratation avec données du formulaire / injection des valeurs saisies dans le form
 
+            $em->persist($module); // équivalent du prepare dans PDO
+            $em->flush(); // équivalent de insert into (execute) dans PDO
+
+            return $this->redirectToRoute('show_categorie', ['id'=>$categorieID]);
         }
 
-        // vue pour afficher le formulaire 
+        // vue pour afficher le formulaire d'ajout
         return $this->render('module/addModule.html.twig', [
-           'formAddmodule' => $form->createView(),
-           'edit'=> $module->getId()
-            
-        ]);
-
+            'formAddmodule' => $form->createView(),
+            'edit' => $module->getId()]); // création du formulaire
     }
+    
 
     #[Route('/module/{id}/delete', name: 'delete_module')]
     public function delete(EntityManagerInterface $entityManager, module $module): Response

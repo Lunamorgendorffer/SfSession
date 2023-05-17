@@ -14,7 +14,6 @@ class ModuleType extends AbstractType
     {
         $builder
             ->add('intitule')
-            ->add('categorie')
             ->add('submit', SubmitType::class,['attr' => ['class' => 'btn btn-secondary']])
         ;
     }
