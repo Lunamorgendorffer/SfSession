@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Entity\Formation;
+use App\Entity\Stagiaire;
 use App\Form\SessionType;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,16 +69,37 @@ class SessionController extends AbstractController
 
     }
 
+    #[Route('/session/{id}/addStagiaire/{idStagiaire}', name: 'addStagiaire')] 
+    public function addStagiaireToSession(EntityManagerInterface $entityManager, Session $session, int $idStagiaire): Response 
+    { 
+        $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($idStagiaire);
+        
+        if ($stagiaire) {
+            $session->addStagiaire($stagiaire);
+            $entityManager->flush();
+            
+            $this->addFlash('success', 'Stagiaire ajouté à la session avec succès.');
+        } else {
+            $this->addFlash('error', 'Stagiaire introuvable.');
+        }
+        
+        return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+        
+    }
+
     
     #[Route('/session/{id}', name: 'show_session')]
 
     // #[Route('/formation/{id}', name: 'show_formation')]
-    public function show(Session $session): Response
+    public function show(Session $session,SessionRepository $sessionRepository): Response
     {
+        $stagiaires = $sessionRepository->findStagiairesNotInSession($session->getId());
+
         return $this->render('session/detailSession.html.twig', [
            'session' => $session,
            'formation' => $session->getFormations(),
            'programme' => $session->getProgrammes(),
+           'stagiaires' => $stagiaires
         ]);
     }
     

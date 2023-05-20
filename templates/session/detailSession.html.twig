@@ -5,7 +5,7 @@
 {% block body %}
 
 <h1 style="text-align: center; margin-bottom: 30px"> {{ session }}</h1>
-<div class="container" style="display: flex; flex-direction: column; justify-content: center;">
+<div class="container" style="display: flex; flex-direction: column; align-items: center; gap:3em">
     <div>
         <table class="styled-table">
             <thead>
@@ -46,18 +46,34 @@
         {% endfor %}
     </div>
 
-    <h2>liste des stagiaires</h2>
-        {% if session.stagiaires| length ==0 %}
-            
-            <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
-
-        {% else %}
-
-            {% for stagiaire in session.stagiaires %}
+    <div class="card p-3 bg-light" style="display: flex; flex-direction: column; align-items: center; width: 25rem;">
+        <div>
+            <h2>Stagiaires inscrits:</h2>
+            {% if session.stagiaires| length == 0 %}
+                <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
+            {% else %}
+                {% for stagiaire in session.stagiaires %}
                 <a href="{{ path('show_stagiaire', {'id': stagiaire.id})}}">{{stagiaire}}</a> <br>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </div>
 
-        {% endif %}
+        <hr>
+
+        <div>
+            <h2>Stagiaires non inscrits:</h2>
+            <ul>
+                {% for stagiaire in stagiaires %}
+                    {% if not session.stagiaires.contains(stagiaire) %}
+                        <li>{{ stagiaire.nom }} {{ stagiaire.prenom }} <a href="{{ path('addStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" class="btn btn-primary">Ajouter</a></li>
+                    {% endif %}
+                {% endfor %}
+
+            </ul>
+    
+        </div>
+
+    </div>
 
 </div>
 
