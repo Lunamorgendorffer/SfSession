@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Session;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Session>
@@ -38,6 +39,34 @@ class SessionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    
+
+    public function findStagiairesNotInSession(int $sessionId)
+    {
+       
+        $entityManager = $this->getEntityManager();
+
+        $subQuery = $entityManager->createQueryBuilder();
+
+        $subQuery->select('st.id')
+                ->from('App\Entity\stagiaire', 'st')
+                ->join('st.sessions', 's')
+                ->where('s.id = :id')
+                ->setParameter('id', $sessionId);
+
+        $qb = $entityManager->createQueryBuilder();
+
+        $qb->select('sta')
+        ->from('App\Entity\stagiaire', 'sta')
+        ->where($qb->expr()->notIn('sta.id', $subQuery->getDQL()))
+        ->orderBy('sta.nom', 'ASC')
+        ->setParameter('id', $sessionId);
+
+        return $qb->getQuery()->getResult();
+        
+    }
+
 
 //    /**
 //     * @return Session[] Returns an array of Session objects
