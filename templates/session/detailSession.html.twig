@@ -30,16 +30,16 @@
         <table class="table2">
             <thead>
                 <tr>
+                    <th>Categorie</th>
                     <th>Module</th>
                     <th>Nombre de jour</th>
-                    <th>Lien</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>{{ programme.modules.categorie }}</td>
                     <td>{{ programme.modules }}</td>
                     <td>{{ programme.duree }}</td>
-                    <td><a href="#">Détail</a></td>
                 </tr>
             </tbody>
         </table>
@@ -53,7 +53,11 @@
                 <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
             {% else %}
                 {% for stagiaire in session.stagiaires %}
-                <a href="{{ path('show_stagiaire', {'id': stagiaire.id})}}">{{stagiaire}}</a> <br>
+                <li>
+                    <a href="{{ path('show_stagiaire', {'id': stagiaire.id})}}">{{stagiaire}}</a>
+                    <a class="btn btn-danger" href="{{ path('removeStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" >Supprimer</a>
+
+                </li>
                 {% endfor %}
             {% endif %}
         </div>
