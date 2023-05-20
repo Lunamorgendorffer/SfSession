@@ -46,39 +46,40 @@
         {% endfor %}
     </div>
 
-    <div class="card p-3 bg-light" style="display: flex; flex-direction: column; align-items: center; width: 25rem;">
-        <div>
-            <h2>Stagiaires inscrits:</h2>
-            {% if session.stagiaires| length == 0 %}
-                <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
-            {% else %}
-                {% for stagiaire in session.stagiaires %}
-                <li>
-                    <a href="{{ path('show_stagiaire', {'id': stagiaire.id})}}">{{stagiaire}}</a>
-                    <a class="btn btn-danger" href="{{ path('removeStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" >Supprimer</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="card p-3 bg-light" style="display: flex; flex-direction: column; align-items: center; width: 25rem;">
+            <div>
+                <h2>Stagiaires inscrits:</h2>
+                {% if session.stagiaires| length == 0 %}
+                    <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
+                {% else %}
+                    {% for stagiaire in session.stagiaires %}
+                    <li>
+                        <a href="{{ path('show_stagiaire', {'id': stagiaire.id})}}">{{stagiaire}}</a>
+                        <a class="btn btn-danger" href="{{ path('removeStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" >Supprimer</a>
 
-                </li>
-                {% endfor %}
-            {% endif %}
+                    </li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <div>
+                <h2>Stagiaires non inscrits:</h2>
+                <ul>
+                    {% for stagiaire in stagiaires %}
+                        {% if not session.stagiaires.contains(stagiaire) %}
+                            <li>{{ stagiaire.nom }} {{ stagiaire.prenom }} <a href="{{ path('addStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" class="btn btn-primary">Ajouter</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+        
+            </div>
+
         </div>
-
-        <hr>
-
-        <div>
-            <h2>Stagiaires non inscrits:</h2>
-            <ul>
-                {% for stagiaire in stagiaires %}
-                    {% if not session.stagiaires.contains(stagiaire) %}
-                        <li>{{ stagiaire.nom }} {{ stagiaire.prenom }} <a href="{{ path('addStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" class="btn btn-primary">Ajouter</a></li>
-                    {% endif %}
-                {% endfor %}
-
-            </ul>
-    
-        </div>
-
-    </div>
-
+    {% endif %}
 </div>
 
 
