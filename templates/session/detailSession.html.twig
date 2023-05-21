@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{session.dateDebut| date ('d/m/Y')}}</td>
                     <td>{{session.dateFin| date ('d/m/Y')}}</td>
-                    <td>{{session.nbPlaces}}</td>
+                    <td>{{session.disponibles}}</td>
                 </tr>
             </tbody>
         </table>
@@ -50,8 +50,8 @@
         <div class="card p-3 bg-light" style="display: flex; flex-direction: column; align-items: center; width: 25rem;">
             <div>
                 <h2>Stagiaires inscrits:</h2>
-                {% if session.stagiaires| length == 0 %}
-                    <p> Il n'y a pas encore de stagiaire inscrit à cette session </p>
+                {% if session.disponibles == 0 %}
+                    <p> La session est complète </p>
                 {% else %}
                     {% for stagiaire in session.stagiaires %}
                     <li>
