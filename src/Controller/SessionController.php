@@ -28,6 +28,7 @@ class SessionController extends AbstractController
         ]);
     }
 
+    // fonction ajout + edit une session
     #[Route('/session/add', name: 'add_session')]
     #[Route('/session/{id}/edit', name: 'edit_session')]
     public function add(EntityManagerInterface $entityManager, Session $session = null, Request $request): Response 
@@ -59,6 +60,7 @@ class SessionController extends AbstractController
 
     }
 
+    // fonction delete d'une session 
     #[Route('/session/{id}/delete', name: 'delete_session')]
     public function delete(EntityManagerInterface $entityManager, Session $session): Response
     {
@@ -69,60 +71,65 @@ class SessionController extends AbstractController
 
     }
 
-    #[Route('/session/{id}/addStagiaire/{idStagiaire}', name: 'addStagiaire')] 
+    // fonction ajouter un stagiaire à une session
+    #[Route('/session/{id}/addStagiaire/{idStagiaire}', name: 'addStagiaire')]
     public function addStagiaireToSession(EntityManagerInterface $entityManager, Session $session, int $idStagiaire): Response 
-    { 
+    {
+        // Trouver le stagiaire correspondant à l'idStagiaire
         $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($idStagiaire);
         
         if ($stagiaire) {
+            // Ajouter le stagiaire à la session
             $session->addStagiaire($stagiaire);
             $entityManager->flush();
             
+            // Afficher un message de succès
             $this->addFlash('success', 'Stagiaire ajouté à la session avec succès.');
         } else {
+            // Afficher un message d'erreur si le stagiaire n'est pas trouvé
             $this->addFlash('error', 'Stagiaire introuvable.');
         }
         
+        // Rediriger vers la page d'affichage de la session
         return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
-        
     }
-
+    
+    // fonction pour retirer un stagaire de la session
     #[Route('/session/{id}/removeStagiaire/{idStagiaire}', name: 'removeStagiaire')]
-    public function removeStagiaireToSession(EntityManagerInterface $entityManager, Session $session,  int $id, int $idStagiaire): Response
+    public function removeStagiaireToSession(EntityManagerInterface $entityManager, Session $session, int $id, int $idStagiaire): Response
     {
+        // Trouver le stagiaire correspondant à l'idStagiaire
         $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($idStagiaire); 
 
+        // Supprimer le stagiaire de la session
         $session->removeStagiaire($stagiaire);
-        // $entityManager->persist($session);
+        
+        // Enregistrer les modifications dans la base de données
         $entityManager->flush();
         
+        // Rediriger vers la page d'affichage de la session
         return $this->redirectToRoute('show_session', ['id' => $id]);
     }
 
-    
-    #[Route('/session/{id}', name: 'show_session')]
 
-    // #[Route('/formation/{id}', name: 'show_formation')]
-    public function show(Session $session,SessionRepository $sessionRepository): Response
+    // fonction pour afficher la page detail de la session 
+    #[Route('/session/{id}', name: 'show_session')]
+    public function show(Session $session, SessionRepository $sessionRepository): Response
     {
+        // Récupérer les stagiaires qui ne sont pas dans la session
         $stagiaires = $sessionRepository->findStagiairesNotInSession($session->getId());
 
+        // Retourne sur la vue 'session/detailSession.html.twig' avec les données suivantes
         return $this->render('session/detailSession.html.twig', [
-           'session' => $session,
-           'formation' => $session->getFormations(),
-           'programme' => $session->getProgrammes(),
-           'stagiaires' => $stagiaires
+        'session' => $session,             // La session à afficher
+        'formation' => $session->getFormations(),     // Les formations de la session
+        'programme' => $session->getProgrammes(),     // Les programmes de la session
+        'stagiaires' => $stagiaires        // Les stagiaires qui ne sont pas dans la session
         ]);
     }
+
     
-    // #[Route('/formation/{id}', name: 'show_formation')]
-    // public function showFormation(Formation $formation): Response
-    // {
-    //     return $this->render('formation/detailFormation.html.twig', [
-    //        'formation' => $formation,
-    //        'sessions' => $formation->getSessions(),
-    //     ]);
-    // }
+  
     
 
       
