@@ -182,17 +182,23 @@ class Session
     }
 
     public function getReservations()
-    {
-        $nbReservees = count($this->stagiaires);
-        $nbDispos = 0;
-        
-        if (count($this->stagiaires) != 0){
-            echo $nbReservees;
-            
-        }else{
-            echo " Aucune réservation ";
-        }
+{
+    // Calculer le nombre places prises
+    $nbReservees = count($this->stagiaires);
+    
+    // Initialiser le nombre de places disponibles à 0
+    $nbDispos = 0;
+    
+    // Vérifier s'il y a des places prises 
+    if (count($this->stagiaires) != 0) {
+        // Afficher le nombre de place prises 
+        echo $nbReservees;
+    } else {
+        // Afficher un message indiquant aucune réservation
+        echo "Il y a aucune réservation pour cette session ";
     }
+}
+
 
 
     public function getDisponibles(){

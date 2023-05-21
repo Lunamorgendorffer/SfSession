@@ -43,29 +43,30 @@ class SessionRepository extends ServiceEntityRepository
     
 
     public function findStagiairesNotInSession(int $sessionId)
-    {
-       
-        $entityManager = $this->getEntityManager();
+{
+    // Récupérer l'EntityManager
+    $entityManager = $this->getEntityManager();
 
-        $subQuery = $entityManager->createQueryBuilder();
+    // Créer une sous-requête pour sélectionner les IDs des stagiaires présents dans la session donnée
+    $subQuery = $entityManager->createQueryBuilder();
+    $subQuery->select('st.id') //Sélectionne l'attribut 'id' de l'entité "stagiaire" pour la sous-requête.
+        ->from('App\Entity\stagiaire', 'st') //Spécifie que la requête se fait à partir de l'entité "stagiaire" et utilise l'alias 'st' pour cette entité dans la requête.
+        ->join('st.sessions', 's') // Effectue une jointure avec la relation "sessions" de l'entité "stagiaire" en utilisant l'alias 's' pour cette relation dans la requête.
+        ->where('s.id = :id') //Ajoute une condition pour filtrer les résultats de la requête, où l'ID de la session doit correspondre à la valeur du paramètre ':id'.
+        ->setParameter('id', $sessionId); // Définit la valeur du paramètre ':id' avec la valeur de la variable $sessionId.
 
-        $subQuery->select('st.id')
-                ->from('App\Entity\stagiaire', 'st')
-                ->join('st.sessions', 's')
-                ->where('s.id = :id')
-                ->setParameter('id', $sessionId);
+    // Créer une requête principale pour sélectionner les stagiaires qui ne sont pas dans la session donnée
+    $qb = $entityManager->createQueryBuilder();
+    $qb->select('sta') //Sélectionne l'entité "stagiaire" pour la requête principale.
+        ->from('App\Entity\stagiaire', 'sta') // Spécifie que la requête principale se fait à partir de l'entité "stagiaire" et utilise l'alias 'sta' pour cette entité dans la requête.
+        ->where($qb->expr()->notIn('sta.id', $subQuery->getDQL())) // Ajoute une condition pour filtrer les résultats de la requête principale, où l'ID du stagiaire ne doit pas être dans la sous-requête.
+        ->orderBy('sta.nom', 'ASC') //Trie les résultats de la requête par le nom du stagiaire en ordre croissant.
+        ->setParameter('id', $sessionId); //Définit la valeur du paramètre ":id" avec la valeur de la variable $sessionId.
 
-        $qb = $entityManager->createQueryBuilder();
+    // Exécuter la requête et retourner les résultats
+    return $qb->getQuery()->getResult();
+}
 
-        $qb->select('sta')
-        ->from('App\Entity\stagiaire', 'sta')
-        ->where($qb->expr()->notIn('sta.id', $subQuery->getDQL()))
-        ->orderBy('sta.nom', 'ASC')
-        ->setParameter('id', $sessionId);
-
-        return $qb->getQuery()->getResult();
-        
-    }
 
 
 //    /**
