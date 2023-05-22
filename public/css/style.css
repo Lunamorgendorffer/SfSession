@@ -18,12 +18,19 @@ header nav {
     
 }
 
-/* .conSession{
+.containerSess{
     display: flex;
     flex-direction: column; 
     align-items: center;
     gap: 3em;
-} */
+}
+
+.constainerSta{
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+   
+}
 
 .styled-table {
     border-collapse: collapse;
