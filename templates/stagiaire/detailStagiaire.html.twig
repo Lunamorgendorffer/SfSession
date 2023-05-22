@@ -3,14 +3,27 @@
 {% block title %}DetailSession{% endblock %}
 
 {% block body %}
-
-<h1> {{ stagiaire }}</h1>
-<p>
-    Date de Naissances: {{stagiaire.dateNaissance | date ('d/m/Y') }}, {{stagiaire.age}} ans. <br>
-    Adresse: {{stagiaire.adresse}} <br>
-    Cp: {{stagiaire.cp}} <br>
-    Ville: {{stagiaire.ville}} <br>
-</p>
+<div class="constainerSta">
+    <div class="card p-3 bg-light" style="display: flex; flex-direction: column; align-items: center; width: 25rem;">
+        <h1> {{ stagiaire }}</h1>
+        <p>
+            Date de Naissances: {{stagiaire.dateNaissance | date ('d/m/Y') }}, {{stagiaire.age}} ans. <br>
+            Adresse: {{stagiaire.adresse}} <br>
+            Cp: {{stagiaire.cp}} <br>
+            Ville: {{stagiaire.ville}} <br>
+            Courriel: {{stagiaire.email}} <br>
+        </p>
+    
+        <div class="card-body">
+            <h3>Sessions prevues</h3>
+            {% for session in stagiaire.sessions %}
+            <li>
+                <a href="{{ path('show_session', {'id': session.id})}}">{{ session }}</a> du {{session.dateDebut| date ('d/m/Y')}} au {{session.dateFin| date ('d/m/Y')}}
+            </li>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 
 
