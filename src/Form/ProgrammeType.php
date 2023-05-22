@@ -18,15 +18,21 @@ class ProgrammeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('duree',IntegerType::class,['attr'=>['class'=>'form-control']])
-            ->add('session',EntityType::class,[
+            ->add('duree')
+            ->add('session', EntityType::class, [
                 'class'=> Session::class,
-                TextType::class,
-                'attr'=>['class'=>'form-control']])
-            ->add('modules', EntityType::class,['
-                class'=> ModuleSession::class,
-                TextType::class,
-                'attr'=>['class'=>'form-control']])
+                'choice_label'=> function (Session $session){
+                    return $session->getintitule();
+                },
+                ])
+
+
+            ->add('modules', EntityType::class,[     
+                'class'=> ModuleSession::class,
+                'choice_label'=>function (ModuleSession $module){
+                    return $module->getintitule();
+                },
+            ])
             ->add('submit', SubmitType::class,['attr' => ['class' => 'btn btn-secondary']])
         ;
     }

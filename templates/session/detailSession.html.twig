@@ -25,10 +25,12 @@
         </table>
     </div>
 
+    
     <div>
+
         {% for programme in session.programmes %}
         <table class="table2">
-            <thead>
+             <thead>
                 <tr>
                     <th>Categorie</th>
                     <th>Module</th>
@@ -36,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr> 
                     <td>{{ programme.modules.categorie }}</td>
                     <td>{{ programme.modules }}</td>
                     <td>{{ programme.duree }}</td>
@@ -45,6 +47,7 @@
         </table>
         {% endfor %}
     </div>
+
 
     {% if is_granted('ROLE_ADMIN') %}
         <div class="card p-3 bg-light" style="display: flex; flex-direction: column; align-items: center; width: 25rem;">

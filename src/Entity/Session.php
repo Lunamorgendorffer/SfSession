@@ -106,6 +106,7 @@ class Session
     public function getProgrammes(): Collection
     {
         return $this->programmes;
+    
     }
 
     public function addProgramme(Programme $programme): self

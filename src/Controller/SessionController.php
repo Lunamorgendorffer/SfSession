@@ -6,6 +6,7 @@ use App\Entity\Session;
 use App\Entity\Formation;
 use App\Entity\Stagiaire;
 use App\Form\SessionType;
+use App\Entity\ModuleSession;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,18 +112,31 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('show_session', ['id' => $id]);
     }
 
+  
+    // public function addProgrammeToSession(EntityManagerInterface $entityManager, Session $session, int $programmeId): Response
+    // {
+    //    $module = $entityManager->getRepository(Programme::class)->find($programmeId);
+    //    if($programme){
+    //        $session->addProgramme($programme);
+    //        $entityManager->flush();
+    //    }
+
+    //    return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
+
+    // }
+
 
     // fonction pour afficher la page detail de la session 
     #[Route('/session/{id}', name: 'show_session')]
-    public function show(Session $session, SessionRepository $sessionRepository): Response
+    public function show(Session $session, EntityManagerInterface $entityManager, SessionRepository $sessionRepository): Response
     {
         // Récupérer les stagiaires qui ne sont pas dans la session
         $stagiaires = $sessionRepository->findStagiairesNotInSession($session->getId());
+        // $session = $entityManager->getRepository(Session::class)->findAll();
 
         // Retourne sur la vue 'session/detailSession.html.twig' avec les données suivantes
         return $this->render('session/detailSession.html.twig', [
         'session' => $session,             // La session à afficher
-        'formation' => $session->getFormations(),     // Les formations de la session
         'programme' => $session->getProgrammes(),     // Les programmes de la session
         'stagiaires' => $stagiaires        // Les stagiaires qui ne sont pas dans la session
         ]);

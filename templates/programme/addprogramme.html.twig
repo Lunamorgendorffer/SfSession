@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AddSession{% endblock %}
+
+{% block body %}
+
+{% if edit %}
+    <h1>Edit une categorie</h1>
+{% else %}
+    <h1> ajouter programme</h1>
+{% endif %}
+
+
+{{ form_start(formAddprogramme) }}
+    
+    {{ form_row(formAddprogramme.session) }}
+    {{ form_row(formAddprogramme.modules) }}
+    {{ form_row(formAddprogramme.submit) }}
+
+{{ form_end(formAddprogramme) }}
+
+{% endblock %}
