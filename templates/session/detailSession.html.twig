@@ -28,7 +28,7 @@
     
     <div>
 
-        {% for programme in session.programmes %}
+        
         <table class="table2">
              <thead>
                 <tr>
@@ -38,14 +38,22 @@
                 </tr>
             </thead>
             <tbody>
+                {% for programme in session.programmes %}
                 <tr> 
                     <td>{{ programme.modules.categorie }}</td>
                     <td>{{ programme.modules }}</td>
                     <td>{{ programme.duree }}</td>
+                    <br>
+                    
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
-        {% endfor %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="adtbtn">
+            <a class="btn btn-primary" href="{{ path('add_programme', {'sessionId': session.id}) }}">Add programme </a><br>
+        </div>
+        {% endif %}
     </div>
 
 

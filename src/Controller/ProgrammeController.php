@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Session;
 use App\Entity\Programme;
 use App\Form\ProgrammeType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,13 +22,15 @@ class ProgrammeController extends AbstractController
     }
 
     // fonction ajout + edit une programme
-    #[Route('/programme/add', name: 'add_programme')]
+    #[Route('/programme/add/{sessionId}', name: 'add_programme')]
     #[Route('/programme/{id}/edit', name: 'edit_programme')]
-    public function add(EntityManagerInterface $entityManager, Programme $programme = null, Request $request): Response 
+    public function add(EntityManagerInterface $entityManager, Request $request, Programme $programme = null, $sessionId = null): Response 
     {
         if (!$programme){ // si la programme n'existe pas 
             $programme = new Programme();  // alors crée un nouvel objet programme 
         }
+        $session= $entityManager->getRepository(Session::class)->find($sessionId);
+        
         // on crée le formulaire 
         $form = $this->createForm(ProgrammeType::class, $programme);
         $form->handleRequest($request);
@@ -39,7 +42,7 @@ class ProgrammeController extends AbstractController
             $entityManager->persist($programme);// = prepare
             $entityManager->flush();// execute, on envoie les données dans la db 
 
-            return $this->redirectToRoute('app_programme');
+            return $this->redirectToRoute ('show_session', ['id' => $sessionId]);
 
         }
 
