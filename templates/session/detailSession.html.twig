@@ -5,7 +5,7 @@
 {% block body %}
 
 <h1 style="text-align: center; margin-bottom: 30px"> {{ session }}</h1>
-<div class="container" style="display: flex; flex-direction: column; align-items: center; gap:3em">
+<div class="containerSess">
     <div>
         <table class="styled-table">
             <thead>
@@ -70,7 +70,8 @@
                 <ul>
                     {% for stagiaire in stagiaires %}
                         {% if not session.stagiaires.contains(stagiaire) %}
-                            <li>{{ stagiaire.nom }} {{ stagiaire.prenom }} <a href="{{ path('addStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" class="btn btn-primary">Ajouter</a></li>
+                            <li><a href="{{ path('show_stagiaire', {'id': stagiaire.id})}}">{{ stagiaire.nom }} {{ stagiaire.prenom }}</a>
+                                <a href="{{ path('addStagiaire', {'id': session.id, 'idStagiaire': stagiaire.id}) }}" class="btn btn-primary">Ajouter</a></li>
                         {% endif %}
                     {% endfor %}
 
