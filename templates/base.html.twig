@@ -10,9 +10,6 @@
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
     <body>
     </head>
@@ -42,8 +39,13 @@
             </div>
         </header>
         
-
+        
         {% block body %}
         {% endblock %}
+        
+        {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+            <script src="{{asset('js/gsf.js')}}"></script>
+        {% endblock %}
     </body>
-</html>
+    </html>

@@ -54,8 +54,9 @@ class SessionController extends AbstractController
 
         // vue pour afficher le formulaire 
         return $this->render('session/addSession.html.twig', [
-           'formAddsession' => $form->createView(),
-           'edit'=> $session->getId()
+           'form' => $form->createView(),
+           'edit'=> $session->getId(),
+           'sessionId' => $session->getId()
             
         ]);
 
@@ -112,18 +113,6 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('show_session', ['id' => $id]);
     }
 
-  
-    // public function addProgrammeToSession(EntityManagerInterface $entityManager, Session $session, int $programmeId): Response
-    // {
-    //    $module = $entityManager->getRepository(Programme::class)->find($programmeId);
-    //    if($programme){
-    //        $session->addProgramme($programme);
-    //        $entityManager->flush();
-    //    }
-
-    //    return $this->redirectToRoute('show_session', ['id' => $session->getId()]);
-
-    // }
 
 
     // fonction pour afficher la page detail de la session 

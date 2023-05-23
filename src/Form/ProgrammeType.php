@@ -33,7 +33,7 @@ class ProgrammeType extends AbstractType
                     return $module->getintitule();
                 },
             ])
-            ->add('submit', SubmitType::class,['attr' => ['class' => 'btn btn-secondary']])
+           
         ;
     }
         
