@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<h1 style="text-align: center; margin-bottom: 30px"> {{ session }}</h1>
+<h1 style="text-align: center; "> {{ session }}</h1>
 <div class="containerSess">
     <div>
         <table class="styled-table">
@@ -27,8 +27,6 @@
 
     
     <div>
-
-        
         <table class="table2">
              <thead>
                 <tr>
@@ -47,7 +45,7 @@
                     {% endfor %}
                     <td>{{ programme.modules }}</td> 
                     <td>{{ programme.duree }}</td>
-                    <br>
+                    {# <br> #}
                     
                 </tr>
                 {% endfor %} 
