@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Entity\Formation;
+use App\Entity\Programme;
 use App\Entity\Stagiaire;
 use App\Form\SessionType;
 use App\Entity\ModuleSession;
@@ -121,12 +122,14 @@ class SessionController extends AbstractController
     {
         // Récupérer les stagiaires qui ne sont pas dans la session
         $stagiaires = $sessionRepository->findStagiairesNotInSession($session->getId());
+        $programmes = $entityManager->getRepository(Programme::class)->findAll(); 
+        // dd($programme);
         // $session = $entityManager->getRepository(Session::class)->findAll();
 
         // Retourne sur la vue 'session/detailSession.html.twig' avec les données suivantes
         return $this->render('session/detailSession.html.twig', [
         'session' => $session,             // La session à afficher
-        'programme' => $session->getProgrammes(),     // Les programmes de la session
+        'programmes' => $programmes,     // Les programmes de la session
         'stagiaires' => $stagiaires        // Les stagiaires qui ne sont pas dans la session
         ]);
     }

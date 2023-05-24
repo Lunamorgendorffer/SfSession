@@ -38,15 +38,19 @@
                 </tr>
             </thead>
             <tbody>
-                {% for programme in session.programmes %}
+                {% for programme in programmes %}
+                {# {{ dump(programme) }} #}
                 <tr> 
                     <td>{{ programme.modules.categorie }}</td>
-                    <td>{{ programme.modules }}</td>
+                    {% for module in programme.modules %}
+                        {# {{ dump(module) }} #}
+                    {% endfor %}
+                    <td>{{ programme.modules }}</td> 
                     <td>{{ programme.duree }}</td>
                     <br>
                     
                 </tr>
-                {% endfor %}
+                {% endfor %} 
             </tbody>
         </table>
         {% if is_granted('ROLE_ADMIN') %}
