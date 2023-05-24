@@ -31,7 +31,7 @@ class Session
     
 
     #[ORM\OneToMany(mappedBy: 'session', targetEntity: Programme::class, cascade:['persist'], orphanRemoval: true)]
-    #[ORM\OrderBy(['module' => 'ASC'])]
+    #[ORM\OrderBy(['modules' => 'ASC'])]
     private Collection $programmes;
 
     #[ORM\ManyToMany(targetEntity: Stagiaire::class, inversedBy: 'sessions')]

@@ -26,14 +26,6 @@ class StagiaireType extends AbstractType
             ->add('ville',TextType::class,['attr'=>['class'=>'form-control']])
             ->add('cp',TextType::class,['attr'=>['class'=>'form-control']])
             ->add('email',TextType::class,['attr'=>['class'=>'form-control']])
-            ->add('photo')
-            // ->add('sessions', EntityType::class,[
-            //     'class'=> Session::class,
-            //     'choice_label'=>'intitule',
-            //     'multiple' => true,
-            //     'attr'=>['class'=>'form-control']
-            //     ])
-            ->add('submit', SubmitType::class,['attr' => ['class' => 'btn btn-secondary']])
         ;
     }
 

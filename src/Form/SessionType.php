@@ -35,7 +35,13 @@ class SessionType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
             ])
-            ->add('stagiaires')
+            ->add('stagiaires', CollectionType::class,[
+                'entry_type' => StagiaireType::class,
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false
+            ])
             ->add('submit', SubmitType::class,['attr' => ['class' => 'btn btn-secondary']])
         ;
     }
